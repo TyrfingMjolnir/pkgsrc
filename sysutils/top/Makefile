@@ -11,9 +11,18 @@ COMMENT=	The ubiquitous system monitoring utility
 
 GNU_CONFIGURE=		yes
 
+.include "../../mk/bsd.prefs.mk"
+
+.if defined(ABI) && !empty(ABI:M64)
+TOP_ABI=		64
+.else
+TOP_ABI=		default
+.endif
+
 CONFIGURE_ENV+=		SET_OWNER=${BINOWN}
 CONFIGURE_ENV+=		SET_GROUP=${BINGRP}
 CONFIGURE_ENV+=		SET_MODE=${BINMODE}
+CONFIGURE_ENV+=		ABI=${TOP_ABI}
 
 post-extract:
 	${CP} ${FILESDIR}/m_dragonfly.c ${WRKSRC}/machine
