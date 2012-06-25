@@ -22,6 +22,8 @@ RCD_SCRIPTS=		haproxy
 EGDIR=			${PREFIX}/share/examples/${PKGBASE}
 INSTALLATION_DIRS+=	${EGDIR}
 
+CONF_FILES+=		${EGDIR}/haproxy.cfg ${PKG_SYSCONFDIR}/haproxy.cfg
+
 .include "../../mk/bsd.prefs.mk"
 
 .if ${OPSYS} == "NetBSD"
