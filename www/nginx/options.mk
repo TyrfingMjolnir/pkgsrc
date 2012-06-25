@@ -6,6 +6,7 @@ PKG_SUPPORTED_OPTIONS=	dav flv gtools inet6 luajit mail-proxy memcache naxsi \
 			debug status nginx-autodetect-cflags spdy echo \
 			set-misc headers-more array-var encrypted-session \
 			form-input perl
+PKG_SUPPORTED_OPTIONS+=	passenger
 PKG_SUGGESTED_OPTIONS=	inet6 pcre ssl
 
 PLIST_VARS+=		naxsi perl uwsgi
@@ -212,4 +213,24 @@ INSTALLATION_DIRS+=	${PERL5_INSTALLVENDORARCH}/auto/nginx
 PLIST.perl=		yes
 .include "../../lang/perl5/dirs.mk"
 .include "../../lang/perl5/buildlink3.mk"
+.endif
+
+.if !empty(PKG_OPTIONS:Mpassenger)
+PKGNAME=		${DISTNAME}
+FILEBASE=		${PKGBASE}+passenger
+
+DEPENDS+=		${RUBY_PKGPREFIX}-passenger-[0-9]*:../../wip/ruby-passenger
+
+CONFIGURE_ARGS+=	--add-module=${WRKDIR}/passenger/ext/nginx
+
+MESSAGE_SRC=		MESSAGE
+MESSAGE_SRC+=		MESSAGE.passenger
+
+.include "../../wip/ruby-passenger/inplace.mk"
+
+pre-configure: build-passenger-files
+
+build-passenger-files:
+	cd ${WRKDIR}/passenger/build && ${RAKE} nginx:clean nginx
+
 .endif
