@@ -17,6 +17,17 @@ USE_LIBTOOL=	yes
 
 ONLY_FOR_PLATFORM=     Linux-*-* FreeBSD-*-* NetBSD-*-*
 
+.include "../../mk/bsd.prefs.mk"
+
+.if ${OPSYS} == "SunOS"
+. if exists(/system/lxproc)
+ONLY_FOR_PLATFORM+=	SunOS-*-*
+CONFIGURE_ARGS+=	--with-proc=/system/lxproc
+. else
+PKG_FAIL_REASON+=	"lxproc must be mounted at /system/lxproc for package to build on SmartOS"
+. endif
+.endif
+
 CONFIGURE_ENV+=		ac_cv_file__proc_stat=yes ac_cv_file__proc_meminfo=yes
 
 .include "../../devel/ncursesw/buildlink3.mk"
