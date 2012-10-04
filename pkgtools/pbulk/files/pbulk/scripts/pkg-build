@@ -30,7 +30,7 @@
 # OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-. @PBULK_CONFIG@
+. ${PBULK_CONF:-@PBULK_CONFIG@}
 
 if [ "${config_version}" != "@PBULK_CONFIG_VERSION@" ]; then
 	echo "Your configuration has version ${config_version}."
@@ -38,7 +38,18 @@ if [ "${config_version}" != "@PBULK_CONFIG_VERSION@" ]; then
 	exit 1
 fi
 
+logpkgtime() {
+	stop_time=`date '+%s'`
+	build_time=`expr ${stop_time} - ${start_time}`
+	mkdir -p ${packages}/pkgtimes
+	echo "${build_time}" >${packages}/pkgtimes/${pkgname}.pkgtime
+}
+
 cleanup() {
+	logpkgtime
+	if [ -n "${local_bulklog}" ]; then
+		mv ${logpkgdir} ${bulklog}/${pkgname}
+	fi
 	if [ "$keep_wrkdir" = yes ]; then
 		${make} pbulk-save-wrkdir INTO=${bulklog}/${pkgname}/wrkdir.tar.gz TAR="${tar}"
 	fi
@@ -50,7 +61,7 @@ cleanup() {
 		fi
 		${tar} -czf ${bulklog}/${pkgname}/prefix.tar.gz ${cur_destdir}${prefix}
 	fi
-	${make} clean > /dev/null 2>&1 || true
+	${make} clean >> ${bulklog}/${pkgname}/clean.log 2>&1 || true
 	exit 1
 }
 
@@ -65,7 +76,7 @@ run_make() {
 		BATCH=1 \
 		DEPENDS_TARGET=/nonexistent \
 		${MAKE_FLAGS} \
-		WRKLOG=${bulklog}/${pkgname}/work.log
+		WRKLOG=${logpkgdir}/work.log
 
 }
 
@@ -106,8 +117,20 @@ while read build_info_line; do
 		;;
 	USERGROUP_PHASE=*)
 		usergroup_phase=${build_info_line#USERGROUP_PHASE=}
+		;;
+	NO_BIN_ON_FTP=*)
+		restricted=${build_info_line#NO_BIN_ON_FTP=}
+		;;
 	esac
 done
+
+# Sometimes writing logs to NFS can cause issues, support writing to a local
+# bulklog directory before moving to NFS at the end.
+if [ -n "${local_bulklog}" ]; then
+	logpkgdir="${local_bulklog}/${pkgname}"
+else
+	logpkgdir="${bulklog}/${pkgname}"
+fi
 
 case "$use_destdir" in
 user-destdir)
@@ -131,17 +154,40 @@ fi
 
 ${pkg_up_to_date_script} ${pkgname} ${dependencies} && exit 0
 
+# Ensure we start with a clean passwd/group.
+for file in group passwd shadow user_attr; do
+	if [ -f ${loc}/${file} ]; then
+		cp -p ${loc}/${file} /etc/${file}
+	else
+		cp -p /etc/${file} ${loc}/${file}
+	fi
+done
+
 set -e
 
 @PREFIX@/libexec/pbulk/client-clean
 
+# Attempt to move the pre-build status file into place.  If we're successful
+# we are the first build and we can now log the remaining details.
+ret=`mv ${loc}/status.pre-build ${loc}/status 2>/dev/null; echo $?`
+if [ ${ret} -eq 0 ]; then
+	opsys=`cd ${pkgsrc}/pkgtools/pkg_install && ${make} show-var VARNAME=OPSYS`
+	opver=`cd ${pkgsrc}/pkgtools/pkg_install && ${make} show-var VARNAME=OS_VERSION`
+	platform=`cd ${pkgsrc}/pkgtools/pkg_install && ${make} show-var VARNAME=MACHINE_ARCH`
+	compiler=`cd ${pkgsrc}/pkgtools/pkg_install && ${make} show-var VARNAME=PKGSRC_COMPILER`
+
+	echo "COMPILER=${compiler}" >> ${loc}/status
+	echo "PLATFORM=${opsys} ${opver}/${platform}" >> ${loc}/status
+fi
+
 # Create the output directory and clean it up
-mkdir -p ${bulklog}/${pkgname}
-rm -f ${bulklog}/${pkgname}/*
+rm -rf ${bulklog}/${pkgname}
+mkdir -p ${logpkgdir}
+rm -f ${logpkgdir}/*
 
 if [ "$use_destdir" = "destdir" -o "$use_destdir" = "user-destdir" ]; then
-	touch ${bulklog}/${pkgname}/work.log
-	@CHOWN@ ${unprivileged_user} ${bulklog}/${pkgname}/work.log
+	touch ${logpkgdir}/work.log
+	@CHOWN@ ${unprivileged_user} ${logpkgdir}/work.log
 fi
 
 pkg_add_normal() {
@@ -169,23 +215,26 @@ else
 	cur_pkgdb="${pkgdb}"
 fi
 
+# Save package start time
+start_time=`date '+%s'`
+
 # Go to target directory
 cd ${pkgsrc}/${pkgdir}
 # Clean build area, just in case
-${make} clean > ${bulklog}/${pkgname}/pre-clean.log 2>&1
+${make} clean > ${logpkgdir}/pre-clean.log 2>&1 || cleanup
 # Install all dependencies the package said it would need
 if [ ! -z "$dependencies" ]; then
-	${pkg_add_cmd} $dependencies > ${bulklog}/${pkgname}/depends.log 2>&1
+	${pkg_add_cmd} $dependencies > ${logpkgdir}/depends.log 2>&1 || cleanup
 fi
 # Build package, create a separate log file for each major phase
-run_make run_direct checksum  > ${bulklog}/${pkgname}/checksum.log 2>&1 || cleanup
-run_usergroup configure > ${bulklog}/${pkgname}/configure.log 2>&1 || cleanup
-run_make ${run_build} configure >> ${bulklog}/${pkgname}/configure.log 2>&1 || cleanup
-run_usergroup build> ${bulklog}/${pkgname}/build.log 2>&1 || cleanup
-run_make ${run_build} all >> ${bulklog}/${pkgname}/build.log 2>&1 || cleanup
-run_usergroup install > ${bulklog}/${pkgname}/install.log 2>&1 || cleanup
-run_make ${run_install} stage-install >> ${bulklog}/${pkgname}/install.log 2>&1 || cleanup
-run_make run_direct package  > ${bulklog}/${pkgname}/package.log 2>&1 || cleanup
+run_make run_direct checksum > ${logpkgdir}/checksum.log 2>&1 || cleanup
+run_usergroup configure > ${logpkgdir}/configure.log 2>&1 || cleanup
+run_make ${run_build} configure >> ${logpkgdir}/configure.log 2>&1 || cleanup
+run_usergroup build > ${logpkgdir}/build.log 2>&1 || cleanup
+run_make ${run_build} all >> ${logpkgdir}/build.log 2>&1 || cleanup
+run_usergroup install > ${logpkgdir}/install.log 2>&1 || cleanup
+run_make ${run_install} stage-install >> ${logpkgdir}/install.log 2>&1 || cleanup
+run_make run_direct package > ${logpkgdir}/package.log 2>&1 || cleanup
 
 # When using DESTDIR build, add the package once to test install rules.
 # This is not done for potential bootstrap packages as they might already
@@ -193,26 +242,43 @@ run_make run_direct package  > ${bulklog}/${pkgname}/package.log 2>&1 || cleanup
 if [ "${use_destdir}" != "no" ] && \
    [ -z "${is_bootstrap}" ]; then
 	if ! ${pkg_add_cmd} ${pkgname} \
-	    >> ${bulklog}/${pkgname}/package.log 2>&1; then
+	    >> ${logpkgdir}/package.log 2>&1; then
 		run_make run_direct package-clean
 		cleanup
 	fi
 fi
 
 # Clean build area
-${make} clean > ${bulklog}/${pkgname}/clean.log 2>&1
+${make} clean > ${logpkgdir}/clean.log 2>&1 || cleanup
 
 # Test uninstall rules. This is not for cross-compiling as the install script
 # is not run in that case anyway. This is also not done for packages marked as
 # part of the bootstrap, those have the preserve flag set.
 if [ "$cross_compile" = "no" ] && \
    [ -z "${is_bootstrap}" ]; then
-	${pkg_delete} -K ${cur_pkgdb} ${pkgname} > ${bulklog}/${pkgname}/deinstall.log 2>&1
+	${pkg_delete} -K ${cur_pkgdb} ${pkgname} > ${logpkgdir}/deinstall.log 2>&1 || cleanup
 fi
 
 # Comment the following out if you want to test all deinstall scripts.
 # This is quite expensive and mostly redundant, so it is disabled by default.
 #${pkg_delete} -r \* > /dev/null 2>&1 || true
 
+# Save build runtime
+logpkgtime
+
+# Save a SHA512 sum of the package (if not restricted), saves doing all of
+# them single-threaded at the end of a bulk build and avoids re-computing for
+# packages we have already built.
+if [ -z "${restricted}" ]; then
+	mkdir -p ${packages}/checksums ${packages}/pkginfo
+	(
+		cd ${packages}
+		${digest} SHA512 All/${pkgname}.tgz \
+		    > ${packages}/checksums/${pkgname}.sha512
+		${pkg_info} -X All/${pkgname}.tgz \
+		    > ${packages}/pkginfo/${pkgname}.pkginfo
+	)
+fi
+
 # Cleanup build logs on success
-rm -R ${bulklog}/${pkgname}
+rm -R ${logpkgdir}

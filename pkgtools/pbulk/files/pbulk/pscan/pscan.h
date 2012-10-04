@@ -49,6 +49,7 @@ struct scan_job {
 
 extern int	 verbosity;
 extern const char *pkgsrc_tree;
+extern int	 limited_scan;
 
 char		*scan_pkglocation(const char *);
 
@@ -56,6 +57,7 @@ void		 client_mode(const char *);
 void		 master_mode(const char *, const char *);
 
 void		 add_job(const char *, size_t, const char *, size_t);
+void		 add_job_pkgpath(const char *, size_t);
 void		 add_job_full(const char *);
 struct scan_job	*get_job(void);
 void		 process_job(struct scan_job *, enum job_state);
