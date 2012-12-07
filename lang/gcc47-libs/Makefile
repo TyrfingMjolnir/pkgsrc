@@ -43,9 +43,11 @@ SHLIB_EXT=	so
 .endif
 
 LIBRARY_FILES=	${WRKDIR}/lib_files
+OBJECT_FILES=	${WRKDIR}/obj_files
 
 GENERATE_PLIST+= ${SED} -e 's,^,${LIBGCC_SUBPREFIX}/${GCC_TARGET_MACHINE}/,' \
-			${LIBRARY_FILES};
+			-e 's,gcc/${MACHINE_GNU_PLATFORM}/${GCC47_DIST_VERSION}/,,' \
+			${LIBRARY_FILES} ${OBJECT_FILES};
 GENERATE_PLIST+= ${GREP} -q 'lib/' ${LIBRARY_FILES} || \
 	   ${ECHO} '@pkgdir ${LIBGCC_SUBPREFIX}/${GCC_TARGET_MACHINE}/lib' ;
 
@@ -55,11 +57,19 @@ ${LIBRARY_FILES}:
 		-e'/libgij/d;/libgcj/d;/libjvm/d'			\
 		-e'/lib.*\.${SHLIB_EXT}/p' 		>${LIBRARY_FILES}
 
-do-install: ${LIBRARY_FILES}
+${OBJECT_FILES}:
+	${PKG_INFO} -qL '${GCC_PKGNAME}-${GCC47_DIST_VERSION}*' |		\
+	${SED} -n -e's,^${LIBGCC_PREFIX}/,,'				\
+		-e'/\.o/p' 				>${OBJECT_FILES}
+
+do-install: ${LIBRARY_FILES} ${OBJECT_FILES}
 	${TEST} -d ${DESTDIR}${LIBGCC_PREFIX}/${GCC_TARGET_MACHINE}/lib ||	\
 		${MKDIR} ${DESTDIR}${LIBGCC_PREFIX}/${GCC_TARGET_MACHINE}/lib
 	cd ${LIBGCC_PREFIX} && 						\
 	  ${PAX} -rw ${DESTDIR}${LIBGCC_PREFIX}/${GCC_TARGET_MACHINE} <${LIBRARY_FILES}
+	cd ${LIBGCC_PREFIX} &&						\
+	  ${PAX} -r -s ',gcc/${MACHINE_GNU_PLATFORM}/${GCC47_DIST_VERSION}/,,' \
+		 -w ${DESTDIR}${LIBGCC_PREFIX}/${GCC_TARGET_MACHINE} <${OBJECT_FILES}
 
 .include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
