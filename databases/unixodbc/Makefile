@@ -14,6 +14,7 @@ LICENSE=	gnu-lgpl-v2.1
 CONFLICTS+=		iodbc<3.52.7nb2
 
 USE_LIBTOOL=		YES
+USE_MULTIARCH=		bin lib
 GNU_CONFIGURE=		YES
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 CONFIGURE_ARGS+=	--enable-driverc
@@ -32,7 +33,7 @@ LIBS.SunOS+=		-lsocket -lnsl
 MAKE_FLAGS+=		LEXLIB=""
 MAKE_ENV+=		AM_MAKEFLAGS=${MAKE_FLAGS:Q}
 
-UNIXODBC_DRIVERS_DIR=	lib/unixodbc
+UNIXODBC_DRIVERS_DIR=	lib${LIBARCHSUFFIX}/unixodbc
 
 post-patch: fix-ltdl-and-lexlib
 
