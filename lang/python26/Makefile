@@ -20,6 +20,11 @@ CONFIGURE_ARGS+=	--enable-shared
 CONFIGURE_ARGS+=	OPT=${CFLAGS:Q}
 CONFIGURE_ARGS+=	--with-system-ffi
 
+USE_MULTIARCH=		bin lib
+MULTIARCH_DIRS.lib=	# empty, manually set in PLIST
+NO_MULTIARCH_LIBDIR=	# defined, manually set
+CHECK_INTERPRETER=no	# $PREFIX/bin/python2.7 not created until pkg_add
+
 LDFLAGS+=		-L${WRKSRC}
 
 # $RANDOM usage there is fine
@@ -161,15 +166,41 @@ SUBST_STAGE.sslbase=	pre-configure
 SUBST_FILES.sslbase=	setup.py
 SUBST_VARS.sslbase=	SSLBASE
 
+SUBST_CLASSES+=		vars
+SUBST_MESSAGE.vars=	Substituting multiarch vars.
+SUBST_STAGE.vars=	pre-configure
+SUBST_FILES.vars=	Makefile.pre.in Modules/getpath.c
+SUBST_FILES.vars+=	Lib/distutils/command/install.py Lib/site.py
+SUBST_FILES.vars+=	Lib/distutils/sysconfig.py
+SUBST_SED.vars=		-e 's,@LIBARCHSUFFIX@,${LIBARCHSUFFIX},'
+.if !empty(MULTIARCH:M[Yy][Ee][Ss])
+SUBST_SED.vars+=	-e 's,@LIBARCHSUFFIX.32@,${LIBARCHSUFFIX.32},'
+SUBST_SED.vars+=	-e 's,@LIBARCHSUFFIX.64@,${LIBARCHSUFFIX.64},'
+.else
+SUBST_SED.vars+=	-e 's,@LIBARCHSUFFIX.32@,,'
+SUBST_SED.vars+=	-e 's,@LIBARCHSUFFIX.64@,,'
+.endif
+
 post-extract:
 	${LN} -s ${WRKSRC}/Lib/smtpd.py ${WRKSRC}/Tools/scripts/smtpd${PY_VER_SUFFIX}.py
 	${MV} ${WRKSRC}/Tools/scripts/pydoc ${WRKSRC}/Tools/scripts/pydoc${PY_VER_SUFFIX}
 	${MV} ${WRKSRC}/Tools/scripts/2to3 ${WRKSRC}/Tools/scripts/2to3-${PY_VER_SUFFIX}
 
+do-install-multiarch-hook:
+	${MKDIR} ${DESTDIR}/${PREFIX}/include/python${PY_VER_SUFFIX}/${INCARCHSUFFIX}
+	${MV} ${DESTDIR}/${PREFIX}/include/python${PY_VER_SUFFIX}/pyconfig.h \
+		${DESTDIR}/${PREFIX}/include/python${PY_VER_SUFFIX}/${INCARCHSUFFIX}
+
 .if ${OPSYS} == "HPUX"
 post-install:
 	${LN} -fs ${DESTDIR}${PREFIX}/lib/libpython2.6.sl \
 		${DESTDIR}${PREFIX}/lib/libpython2.6.sl.1.0
+.endif
+
+.if !empty(MULTIARCH:M[Yy][Ee][Ss])
+post-install:
+	${INSTALL_DATA} ${FILESDIR}/pyconfig.h \
+		${DESTDIR}/${PREFIX}/include/python${PY_VER_SUFFIX}
 .endif
 
 BUILDLINK_DEPMETHOD.readline=		build

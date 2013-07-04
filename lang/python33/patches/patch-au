@@ -1,5 +1,7 @@
 $NetBSD: patch-au,v 1.2 2013/05/26 17:56:09 wiz Exp $
 
+Support multiarch.
+
 --- Makefile.pre.in.orig	2013-05-15 16:32:57.000000000 +0000
 +++ Makefile.pre.in
 @@ -81,7 +81,7 @@ PY_CFLAGS=	$(BASECFLAGS) $(OPT) $(CONFIG
@@ -11,6 +13,15 @@ $NetBSD: patch-au,v 1.2 2013/05/26 17:56:09 wiz Exp $
  NO_AS_NEEDED=	@NO_AS_NEEDED@
  LDLAST=		@LDLAST@
  SGI_ABI=	@SGI_ABI@
+@@ -131,7 +131,7 @@ SO=		$(SHLIB_SUFFIX)
+ LDSHARED=	@LDSHARED@ $(PY_LDFLAGS)
+ BLDSHARED=	@BLDSHARED@ $(PY_LDFLAGS)
+ LDCXXSHARED=	@LDCXXSHARED@
+-DESTSHARED=	$(BINLIBDEST)/lib-dynload
++DESTSHARED=	$(BINLIBDEST)/lib-dynload@LIBARCHSUFFIX@
+ 
+ # Executable suffix (.exe on Windows and Mac OS X)
+ EXE=		@EXEEXT@
 @@ -744,7 +744,7 @@ Objects/setobject.o: $(srcdir)/Objects/s
  $(OPCODETARGETS_H): $(OPCODETARGETGEN_FILES)
  	$(OPCODETARGETGEN) $(OPCODETARGETS_H)
@@ -20,13 +31,42 @@ $NetBSD: patch-au,v 1.2 2013/05/26 17:56:09 wiz Exp $
  
  Python/formatter_unicode.o: $(srcdir)/Python/formatter_unicode.c \
  				$(BYTESTR_DEPS)
-@@ -957,7 +957,8 @@ altbininstall: $(BUILDPYTHON)
- 		if test -n "$(PY3LIBRARY)"; then \
- 			$(INSTALL_SHARED) $(PY3LIBRARY) $(DESTDIR)$(LIBDIR)/$(PY3LIBRARY); \
+@@ -930,7 +930,7 @@ $(DESTSHARED):
+ # Install the interpreter with $(VERSION) affixed
+ # This goes into $(exec_prefix)
+ altbininstall: $(BUILDPYTHON)
+-	@for i in $(BINDIR) $(LIBDIR); \
++	@for i in $(BINDIR) $(LIBDIR)@LIBARCHSUFFIX@; \
+ 	do \
+ 		if test ! -d $(DESTDIR)$$i; then \
+ 			echo "Creating directory $$i"; \
+@@ -949,13 +949,13 @@ altbininstall: $(BUILDPYTHON)
+ 		if test -n "$(DLLLIBRARY)" ; then \
+ 			$(INSTALL_SHARED) $(DLLLIBRARY) $(DESTDIR)$(BINDIR); \
+ 		else \
+-			$(INSTALL_SHARED) $(LDLIBRARY) $(DESTDIR)$(LIBDIR)/$(INSTSONAME); \
++			$(INSTALL_SHARED) $(LDLIBRARY) $(DESTDIR)$(LIBDIR)@LIBARCHSUFFIX@/$(INSTSONAME); \
+ 			if test $(LDLIBRARY) != $(INSTSONAME); then \
+-				(cd $(DESTDIR)$(LIBDIR); $(LN) -sf $(INSTSONAME) $(LDLIBRARY)) \
++				(cd $(DESTDIR)$(LIBDIR)@LIBARCHSUFFIX@; $(LN) -sf $(INSTSONAME) $(LDLIBRARY)) \
+ 			fi \
  		fi; \
--	else	true; \
-+	elif test -f $(INSTSONAME); then \
-+		$(INSTALL_SHARED) $(INSTSONAME) $(DESTDIR)$(LIBDIR); \
+ 		if test -n "$(PY3LIBRARY)"; then \
+-			$(INSTALL_SHARED) $(PY3LIBRARY) $(DESTDIR)$(LIBDIR)/$(PY3LIBRARY); \
++			$(INSTALL_SHARED) $(PY3LIBRARY) $(DESTDIR)$(LIBDIR)@LIBARCHSUFFIX@/$(PY3LIBRARY); \
+ 		fi; \
+ 	else	true; \
  	fi
+@@ -1177,10 +1177,10 @@ inclinstall:
  
- bininstall: altbininstall
+ # Install the library and miscellaneous stuff needed for extending/embedding
+ # This goes into $(exec_prefix)
+-LIBPL=		$(LIBDEST)/config-$(LDVERSION)
++LIBPL=		$(LIBDEST)/config-$(LDVERSION)@LIBARCHSUFFIX@
+ 
+ # pkgconfig directory
+-LIBPC=		$(LIBDIR)/pkgconfig
++LIBPC=		$(LIBDIR)@LIBARCHSUFFIX@/pkgconfig
+ 
+ libainstall:	all python-config
+ 	@for i in $(LIBDIR) $(LIBPL) $(LIBPC); \

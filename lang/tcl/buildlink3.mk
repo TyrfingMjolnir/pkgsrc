@@ -17,7 +17,7 @@ BUILDLINK_FILES.tcl+=	bin/tclsh*
 BUILDLINK_TRANSFORM+=	l:tcl:tcl86
 BUILDLINK_TRANSFORM+=	l:tcl8.6:tcl86
 
-TCLCONFIG_SH?=		${BUILDLINK_PREFIX.tcl}/lib/tclConfig.sh
+TCLCONFIG_SH?=		${BUILDLINK_PREFIX.tcl}/lib${LIBARCHSUFFIX}/tclConfig.sh
 
 _TOOLS_USE_PKGSRC.tclsh=	yes
 

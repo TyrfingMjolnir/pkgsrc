@@ -25,7 +25,7 @@ MAKE_ENV+=	INSTALL_DATA=${INSTALL_DATA:Q}
 CFLAGS+=	-DLUA_ROOT=\"${PREFIX}/\"
 
 PKGCONFIG_OVERRIDE=	${WRKSRC}/lua.pc
-INSTALLATION_DIRS+=	lib/pkgconfig share/doc/lua-5.2
+INSTALLATION_DIRS+=	lib${LIBARCHSUFFIX}/pkgconfig share/doc/lua-5.2
 
 .if ${OPSYS} == "FreeBSD"
 BUILD_TARGET=	freebsd

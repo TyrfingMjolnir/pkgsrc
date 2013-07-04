@@ -6,6 +6,14 @@ $NetBSD: patch-ca,v 1.21 2014/06/08 23:35:55 joerg Exp $
 
 --- Configure.orig	2014-05-26 13:34:18.000000000 +0000
 +++ Configure
+@@ -1332,6 +1332,7 @@
+ : Possible local library directories to search.
+ loclibpth="/usr/local/lib /opt/local/lib /usr/gnu/lib"
+ loclibpth="$loclibpth /opt/gnu/lib /usr/GNU/lib /opt/GNU/lib"
++loclibpth=''
+ 
+ : general looking path for locating libraries
+ glibpth="/lib /usr/lib $xlibpth"
 @@ -3372,13 +3372,14 @@ EOM
  			osvers="$3"
  			;;
