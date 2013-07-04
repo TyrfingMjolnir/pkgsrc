@@ -12,6 +12,7 @@ COMMENT=	Open-source, patent-free voice codec
 LICENSE=	modified-bsd
 
 USE_LIBTOOL=		YES
+USE_MULTIARCH=		lib
 GNU_CONFIGURE=		YES
 PKGCONFIG_OVERRIDE=	speex.pc.in
 PKGCONFIG_OVERRIDE+=	speexdsp.pc.in

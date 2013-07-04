@@ -13,6 +13,7 @@ COMMENT=	Library for manipulating ID3v1 and ID3v2 tags
 USE_LANGUAGES=		c c++
 GNU_CONFIGURE=		yes
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 
 CPPFLAGS+=-DID3_NEED_WCHAR_TEMPLATE
 
