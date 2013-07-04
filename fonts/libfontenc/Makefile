@@ -11,6 +11,7 @@ HOMEPAGE=		http://xorg.freedesktop.org/
 COMMENT=		The fontenc Library from X.org
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 USE_TOOLS+=		pkg-config
 PKGCONFIG_OVERRIDE+=	fontenc.pc.in
 GNU_CONFIGURE=		yes
