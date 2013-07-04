@@ -16,6 +16,7 @@ CONFIGURE_ARGS += --disable-sse2
 .endif
 
 USE_LIBTOOL=	yes
+USE_MULTIARCH=	lib
 USE_TOOLS+=	pkg-config perl
 
 PKGCONFIG_OVERRIDE+=	pixman-1.pc.in

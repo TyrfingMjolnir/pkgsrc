@@ -16,6 +16,7 @@ USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		gmake msgfmt perl pkg-config bash
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 PTHREAD_AUTO_VARS=	yes
 BUILD_DEPENDS+=		gdbus-codegen-[0-9]*:../../devel/gdbus-codegen
 

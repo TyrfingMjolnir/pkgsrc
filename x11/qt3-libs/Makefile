@@ -30,19 +30,19 @@ UNLIMIT_RESOURCES=	datasize
 BUILDLINK_PASSTHRU_DIRS+=	${QTPREFIX}
 
 INSTALLATION_DIRS=	${QTPREFIX}/bin ${QTPREFIX}/include/private
-INSTALLATION_DIRS+=	${QTPREFIX}/lib ${QTPREFIX}/plugins/imageformats
-INSTALLATION_DIRS+=	lib/pkgconfig
+INSTALLATION_DIRS+=	${QTPREFIX}/lib${LIBARCHSUFFIX} ${QTPREFIX}/plugins${LIBARCHSUFFIX}/imageformats
+INSTALLATION_DIRS+=	lib${LIBARCHSUFFIX}/pkgconfig
 
 PKGCONFIG_OVERRIDE=	lib/qt-mt.pc
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/bin/moc ${DESTDIR}${QTPREFIX}/bin
-	${LIBTOOL} --mode=install ${INSTALL_LIB} ${WRKSRC}/lib/libqt-mt.la ${DESTDIR}${QTPREFIX}/lib
+	${LIBTOOL} --mode=install ${INSTALL_LIB} ${WRKSRC}/lib/libqt-mt.la ${DESTDIR}${QTPREFIX}/lib${LIBARCHSUFFIX}
 	${INSTALL_DATA} ${WRKSRC}/include/*.h ${DESTDIR}${QTPREFIX}/include/
 	${INSTALL_DATA} ${WRKSRC}/include/private/*.h ${DESTDIR}${QTPREFIX}/include/private
-	${LIBTOOL} --mode=install ${INSTALL_LIB} ${WRKSRC}/plugins/imageformats/libqjpeg.la ${DESTDIR}${QTPREFIX}/plugins/imageformats/
-	${LIBTOOL} --mode=install ${INSTALL_LIB} ${WRKSRC}/plugins/imageformats/libqmng.la ${DESTDIR}${QTPREFIX}/plugins/imageformats/
-	${INSTALL_DATA} ${WRKSRC}/lib/qt-mt.pc ${DESTDIR}${PREFIX}/lib/pkgconfig
+	${LIBTOOL} --mode=install ${INSTALL_LIB} ${WRKSRC}/plugins/imageformats/libqjpeg.la ${DESTDIR}${QTPREFIX}/plugins${LIBARCHSUFFIX}/imageformats/
+	${LIBTOOL} --mode=install ${INSTALL_LIB} ${WRKSRC}/plugins/imageformats/libqmng.la ${DESTDIR}${QTPREFIX}/plugins${LIBARCHSUFFIX}/imageformats/
+	${INSTALL_DATA} ${WRKSRC}/lib/qt-mt.pc ${DESTDIR}${PREFIX}/lib${LIBARCHSUFFIX}/pkgconfig
 
 .if ${OPSYS} == "Darwin" && empty(MACHINE_PLATFORM:MDarwin-[567].*)
 SUBST_CLASSES+=		socklen
