@@ -15,6 +15,7 @@ GNU_CONFIGURE=		yes
 INFO_FILES=		yes
 USE_TOOLS+=		autoconf autoreconf automake
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		bin lib
 ###
 ### XXX By default, this package will build with -fPIC on linux.
 ###	Instead, let's patch it to use libtool and use --with-pic

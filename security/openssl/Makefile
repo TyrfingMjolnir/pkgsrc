@@ -20,6 +20,7 @@ USE_GCC_RUNTIME=	yes
 .include "../../mk/bsd.prefs.mk"
 .include "../../mk/compiler.mk"
 
+USE_MULTIARCH=		bin lib
 USE_TOOLS+=		fgrep gmake perl
 TEST_TARGET=		tests
 MAKE_JOBS_SAFE=		no
@@ -29,6 +30,7 @@ CONFIGURE_SCRIPT=	./config
 CONFIGURE_ARGS+=	--prefix=${PREFIX:Q}
 CONFIGURE_ARGS+=	--install_prefix=${DESTDIR}
 CONFIGURE_ARGS+=	--openssldir=${PKG_SYSCONFDIR:Q}
+CONFIGURE_ARGS+=	--libdir=lib${LIBARCHSUFFIX:Q}
 CONFIGURE_ARGS+=	shared no-fips
 
 .if ${OPSYS} == "SunOS"

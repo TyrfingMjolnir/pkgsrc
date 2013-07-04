@@ -11,6 +11,7 @@ COMMENT=	SSH2 protocol library
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
+USE_MULTIARCH=	lib
 
 CONFIGURE_ARGS+=	--with-libgcrypt=no
 CONFIGURE_ARGS+=	--with-libz=${BUILDLINK_PREFIX.zlib:Q}
