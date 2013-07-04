@@ -16,6 +16,7 @@ WRKSRC=		${WRKDIR}/${PKGNAME_NOREV}
 
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 USE_TOOLS+=		gmake bash:build perl:build
 HAS_CONFIGURE=		yes
 CONFIG_SHELL=		${BASH}
@@ -23,6 +24,7 @@ CONFIGURE_ARGS+=	--disable-postproc
 CONFIGURE_ARGS+=	--enable-pic
 CONFIGURE_ARGS+=	--enable-runtime-cpu-detect
 CONFIGURE_ARGS+=	--prefix=${PREFIX}
+CONFIGURE_ARGS+=	--libdir=${PREFIX}/lib${LIBARCHSUFFIX}
 CONFIGURE_ARGS+=	--disable-unit-tests
 
 .include "../../mk/bsd.prefs.mk"

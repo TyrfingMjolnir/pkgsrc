@@ -13,8 +13,13 @@ LICENSE=	gnu-gpl-v2
 
 GNU_CONFIGURE=		YES
 USE_LIBTOOL=		YES
+USE_MULTIARCH=		bin lib
 USE_TOOLS+=		pkg-config
 PKGCONFIG_OVERRIDE=	misc/dvdnav.pc.in
+
+pre-configure:
+	cd ${WRKSRC} && autoreconf -vi
+>>>>>>> Convert "multimedia" category to multiarch.
 
 .include "../../multimedia/libdvdread/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"

@@ -8,7 +8,7 @@ $NetBSD: patch-ac,v 1.15 2013/10/06 14:13:10 wiz Exp $
  endif
 -libdir=$(prefix)/lib
 -includedir=$(prefix)/include/matroska
-+libdir=$(PREFIX)/lib
++libdir=$(PREFIX)/lib${LIBARCHSUFFIX}
 +includedir=$(PREFIX)/include/matroska
  
  # Programs
@@ -49,7 +49,7 @@ $NetBSD: patch-ac,v 1.15 2013/10/06 14:13:10 wiz Exp $
 -	$(CXX) -shared -Wl,-soname,$(LIBRARY_SO_VER) -o $(LIBRARY_SO_VER) $(objects_so) -lebml
 -	rm -f $(LIBRARY_SO)
 -	ln -s $(LIBRARY_SO_VER) $(LIBRARY_SO)
-+	$(LIBTOOL) --mode=link $(CXX) -o $(LIBRARY_SO) $(objects_so) -lebml -rpath $(PREFIX)/lib -version-info 0
++	$(LIBTOOL) --mode=link $(CXX) -o $(LIBRARY_SO) $(objects_so) -lebml -rpath $(PREFIX)/lib${LIBARCHSUFFIX} -version-info 0
  
  clean:	cleantest
  	rm -f $(objects) $(objects_so)

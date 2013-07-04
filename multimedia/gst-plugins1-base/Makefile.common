@@ -16,6 +16,8 @@ GST_PLUGINS1_VER=	1.4.4
 BUILDLINK_API_DEPENDS.gstreamer1+= gstreamer1>=1.4.0
 LICENSE=		gnu-lgpl-v2
 
+USE_MULTIARCH=		lib
+
 # Disable all drivers and features by default.
 .for driver in	alsa \
 		cdparanoia \
