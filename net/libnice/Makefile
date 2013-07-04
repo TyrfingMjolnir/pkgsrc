@@ -13,6 +13,7 @@ LICENSE=	gnu-lgpl-v2.1 OR mpl-1.1
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
+USE_MULTIARCH=	lib
 USE_TOOLS+=	pkg-config
 CONFIGURE_ARGS+= --without-gstreamer
 
