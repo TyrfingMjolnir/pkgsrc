@@ -12,6 +12,7 @@ COMMENT=	XSLT parser library from the GNOME project
 LICENSE=	mit # with advertisement clause
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		bin lib
 USE_TOOLS+=		gmake perl
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-libxml-prefix=${BUILDLINK_PREFIX.libxml2}
