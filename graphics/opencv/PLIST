@@ -164,6 +164,8 @@ include/opencv2/videostab/motion_stabilizing.hpp
 include/opencv2/videostab/optical_flow.hpp
 include/opencv2/videostab/stabilizer.hpp
 include/opencv2/videostab/videostab.hpp
+lib/cmake/opencv/OpenCVConfig-version.cmake
+lib/cmake/opencv/OpenCVConfig.cmake
 lib/libopencv_calib3d.so
 lib/libopencv_calib3d.so.2.4
 lib/libopencv_calib3d.so.${PKGVERSION}

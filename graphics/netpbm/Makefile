@@ -20,11 +20,8 @@ LICENSE=	gnu-gpl-v2
 
 USE_TOOLS+=	gmake lex pax perl
 USE_FEATURES=	snprintf
+USE_MULTIARCH=	lib
 
-INSTALL_TARGET=	install-dev install-run
-MAKE_ENV+=	INSTALL=${INSTALL:Q} STRIPFLAG=${_STRIPFLAG_INSTALL:Q} \
-		pkgdir=${STAGEDIR:Q} MACHINE=${MACHINE:Q}
-MAKE_FILE=	GNUmakefile
 REPLACE_PERL+=	converter/pbm/pbmtox10bm
 REPLACE_PERL+=	editor/pnmflip
 REPLACE_PERL+=	editor/pnmquant
@@ -33,7 +30,7 @@ REPLACE_PERL+=	editor/ppmquant
 REPLACE_PERL+=	editor/ppmshadow
 REPLACE_PERL+=	generator/ppmrainbow
 REPLACE_PERL+=	manweb
-STAGEDIR=	${WRKDIR}/staging
+STAGEDIR=	${WRKDIR}/staging-${ABI}
 WRKSRC=		${WRKDIR}/netpbm
 
 WRAPPER_REORDER_CMDS+=	reorder:l:rle:netpbm
@@ -82,6 +79,8 @@ pre-install:
 
 post-install:
 	cd ${STAGEDIR} && 					\
+	${MKDIR} -p lib${LIBARCHSUFFIX} &&			\
+	${MV} link/* lib${LIBARCHSUFFIX} && 			\
 	${RM} -rf man/web && 					\
 	${MKDIR} share &&					\
 	${MV} misc share/netpbm && 				\

@@ -6,6 +6,7 @@ Size (netpbm-10.68.02.tar.gz) = 2703809 bytes
 SHA1 (netpbm-docs-r2313.tar.gz) = 8c36b17b1d2dca6ab7bd34666a8929b9ea665743
 RMD160 (netpbm-docs-r2313.tar.gz) = 03854f545c7c0f4c825ee08bc779b62da0ea05c3
 Size (netpbm-docs-r2313.tar.gz) = 447907 bytes
+SHA1 (patch-aw) = 94307b9096d0a7eeba145294da9214108ed9e35b
 SHA1 (patch-common.mk) = f590cc66e0fe6a07e848b9b46662bca350557bea
 SHA1 (patch-lib_Makefile) = 3f93bd24c53aa1f22aa43545d7ca5422af8e78ca
 SHA1 (patch-pm__config.in.h) = 9cb3084371be4b354832581d47d552bfe9ff1ce1

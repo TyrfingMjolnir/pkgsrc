@@ -14,6 +14,7 @@ LICENSE=	modified-bsd
 USE_CMAKE=		yes
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		gmake pkg-config
 
@@ -28,7 +29,7 @@ REPLACE_PYTHON+=	samples/python/*.py
 WRKSRC=		${WRKDIR}/${DISTNAME:S/a$//}
 
 # includes configure output and paths to gmake etc.
-CHECK_WRKREF_SKIP=	${PREFIX}/lib/libopencv_core.*
+CHECK_WRKREF_SKIP=	${PREFIX}/lib*/libopencv_core.*
 
 .include "options.mk"
 
