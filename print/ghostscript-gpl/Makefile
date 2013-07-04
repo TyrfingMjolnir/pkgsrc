@@ -28,6 +28,7 @@ CONFLICTS+=		ghostscript-gnu-nox11-[0-9]*
 
 USE_TOOLS+=		gmake perl:run lex pkg-config
 USE_LANGUAGES+=		c c++
+USE_MULTIARCH=		lib
 GNU_CONFIGURE=		yes
 UNLIMIT_RESOURCES+=	datasize	# gsromfs1.c
 
@@ -83,6 +84,7 @@ CFLAGS+=		-fPIC
 BUILDLINK_TRANSFORM+=	l:fontconfig:fontconfig:iconv
 .endif
 
+CONFIGURE_ENV+=	LPLIBDIR=${PREFIX}/lib${LIBARCHSUFFIX}
 CONFIGURE_ENV+=	LPLIBDIR=${PREFIX}/lib
 
 # On OpenBSD 5.3, libxcb is required libXt.

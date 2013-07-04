@@ -16,6 +16,7 @@ EXTRACT_ELEMENTS=	${DISTNAME}/build-aux \
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
+USE_MULTIARCH=	lib
 WRKSRC=		${WRKDIR}/${DISTNAME}/texk/ptexenc
 
 CONFIGURE_ARGS+=	--with-system-kpathsea \
