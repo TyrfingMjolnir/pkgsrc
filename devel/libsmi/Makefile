@@ -15,6 +15,7 @@ PIBDIR=		${PREFIX}/share/libsmi/pibs
 DEPENDS+=	wget-[0-9]*:../../net/wget
 
 USE_LIBTOOL=	YES
+USE_MULTIARCH=	lib
 USE_TOOLS+=	gmake
 GNU_CONFIGURE=	YES
 CONFIGURE_ARGS+=--with-mibdir=${MIBDIR:Q}

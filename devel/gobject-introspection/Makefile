@@ -16,6 +16,7 @@ PYTHON_VERSIONS_INCOMPATIBLE=	33 34 # not yet ported as of 1.40.0 (Bug #728079)
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
+USE_MULTIARCH=	bin lib
 USE_TOOLS+=	pkg-config flex bison gmake
 GMAKE_REQD=	3.81
 

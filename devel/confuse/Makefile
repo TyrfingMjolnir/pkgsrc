@@ -13,6 +13,7 @@ COMMENT=	Configuration file parser library
 GNU_CONFIGURE=		YES
 CONFIGURE_ARGS+=	--enable-shared
 USE_LIBTOOL=		YES
+USE_MULTIARCH=		lib
 USE_PKGLOCALEDIR=	YES
 USE_TOOLS+=		pkg-config msgfmt
 

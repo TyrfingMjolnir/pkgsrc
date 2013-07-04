@@ -8,7 +8,7 @@ $NetBSD: patch-aa,v 1.14 2013/04/12 13:35:21 drochner Exp $
  endif
 -libdir=$(prefix)/lib
 -includedir=$(prefix)/include/ebml
-+libdir=$(DESTDIR)$(PREFIX)/lib
++libdir=$(DESTDIR)$(PREFIX)/lib${LIBARCHSUFFIX}
 +includedir=$(DESTDIR)$(PREFIX)/include/ebml
  
  # Programs
@@ -25,7 +25,7 @@ $NetBSD: patch-aa,v 1.14 2013/04/12 13:35:21 drochner Exp $
  INSTALL_OPTS = -m 644
  INSTALL_OPTS_LIB = -m 644
  INSTALL_DIR_OPTS = -m 755
-@@ -48,7 +48,7 @@ LIBS=
+@@ -48,7 +48,7 @@
  
  # Names
  LIBRARY=libebml.a
@@ -49,11 +49,11 @@ $NetBSD: patch-aa,v 1.14 2013/04/12 13:35:21 drochner Exp $
 -	$(CXX) -shared -Wl,-soname,$(LIBRARY_SO_VER) -o $(LIBRARY_SO_VER) $(objects_so)
 -	rm -f $(LIBRARY_SO)
 -	ln -s $(LIBRARY_SO_VER) $(LIBRARY_SO)
-+	$(LIBTOOL) --mode=link $(CXX) -o $(LIBRARY_SO) $(objects_so) -rpath $(PREFIX)/lib -version-info 0
++	$(LIBTOOL) --mode=link $(CXX) -o $(LIBRARY_SO) $(objects_so) -rpath $(PREFIX)/lib${LIBARCHSUFFIX} -version-info 0
  
  clean:
  	rm -f $(objects) $(objects_so)
-@@ -137,8 +135,7 @@ install_staticlib: $(LIBRARY)
+@@ -137,8 +135,7 @@
  
  install_sharedlib: $(LIBRARY_SO)
  	$(INSTALL) $(INSTALL_DIR_OPTS) -d $(libdir)

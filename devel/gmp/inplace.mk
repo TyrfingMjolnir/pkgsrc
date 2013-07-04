@@ -14,5 +14,5 @@ fetch-inplace-gmp:
 
 extract-inplace-gmp:
 	(cd ../../devel/gmp && ${MAKE} WRKDIR=${WRKSRC}/.devel.gmp EXTRACT_DIR=${WRKSRC} \
-		WRKSRC='$${EXTRACT_DIR}/$${DISTNAME:C/a$$//}' SKIP_DEPENDS=YES patch clean)
+		WRKSRC='$${EXTRACT_DIR}/$${DISTNAME:C/a$$//}' SKIP_DEPENDS=YES MULTIARCH=NO patch clean)
 	${MV} ${WRKSRC}/gmp-* ${WRKSRC}/gmp

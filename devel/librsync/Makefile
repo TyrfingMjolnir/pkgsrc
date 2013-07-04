@@ -10,6 +10,7 @@ HOMEPAGE=	http://librsync.sourceforge.net/
 COMMENT=	Checksum-based differencing library
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--without-included-popt
 

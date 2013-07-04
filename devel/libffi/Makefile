@@ -11,9 +11,11 @@ LICENSE=	mit
 
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 USE_TOOLS+=		pkg-config
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS=		--includedir=${PREFIX}/include
+
 PKGCONFIG_OVERRIDE+=	libffi.pc.in
 INFO_FILES=		yes
 
