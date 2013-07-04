@@ -16,6 +16,7 @@ CONFLICTS+=	py27-dbus<0.71
 GNU_CONFIGURE=		YES
 USE_TOOLS+=		gmake msgfmt pkg-config
 USE_LIBTOOL=		YES
+USE_MULTIARCH=		lib
 
 PKGCONFIG_OVERRIDE=	dbus-1.pc.in
 

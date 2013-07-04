@@ -23,6 +23,7 @@ ONLY_FOR_PLATFORM+=	NetBSD-*-sparc64 NetBSD-*-hppa
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-zlib
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 USE_TOOLS+=		pkg-config
 
 PKGCONFIG_OVERRIDE+=	pciaccess.pc.in
