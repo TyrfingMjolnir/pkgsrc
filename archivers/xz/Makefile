@@ -16,6 +16,7 @@ LICENSE=	public-domain AND gnu-gpl-v2
 
 GNU_CONFIGURE=		yes
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 PKGCONFIG_OVERRIDE=	src/liblzma/liblzma.pc.in
 
 GCC_REQD+=		3.0

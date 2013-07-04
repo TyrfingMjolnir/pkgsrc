@@ -13,6 +13,7 @@ COMMENT=	Library to read/create different archive formats
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
+USE_MULTIARCH=	lib
 
 CONFIGURE_ARGS+=	--disable-bsdtar --without-expat --without-xml2 \
 			--disable-bsdcpio
