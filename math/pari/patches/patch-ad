@@ -30,7 +30,7 @@ $NetBSD: patch-ad,v 1.2 2010/02/06 10:37:06 sno Exp $
 -      /usr/ccs/lib\
 -      /usc/ucblib\
 -      /usr/shlib\
-+      $LOCALBASE/lib\
++      $LOCALBASE/lib$LIBARCHSUFFIX\
        .\
     ";;
  esac
