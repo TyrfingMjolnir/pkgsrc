@@ -259,7 +259,7 @@ TOOLS_FIND_PREFIX+=		TOOLS_PREFIX.bison-yacc=bison
 TOOLS_PATH.bison-yacc=		${TOOLS_PREFIX.bison-yacc}/bin/bison
 TOOLS_ARGS.bison-yacc=		-y
 .  endif
-TOOLS_CMD.bison-yacc=		${TOOLS_DIR}/bin/yacc
+TOOLS_CMD.bison-yacc=		${TOOLS_DIR}/bin${BINARCHSUFFIX}/yacc
 #
 # bison/yacc is typically a build tool whose path is not embedded in
 # any scripts or config files.  In this case, pass the full command
@@ -288,7 +288,7 @@ TOOLS_DEPENDS.byacc?=		byacc>=20040328:../../devel/byacc
 TOOLS_CREATE+=			byacc
 TOOLS_FIND_PREFIX+=		TOOLS_PREFIX.byacc=byacc
 TOOLS_PATH.byacc=		${TOOLS_PREFIX.byacc}/bin/yacc
-TOOLS_CMD.byacc=		${TOOLS_DIR}/bin/yacc
+TOOLS_CMD.byacc=		${TOOLS_DIR}/bin${BINARCHSUFFIX}/yacc
 .  endif
 .endif
 
@@ -753,7 +753,7 @@ TOOLS_CREATE+=			sh
 TOOLS_FIND_PREFIX+=		TOOLS_PREFIX.sh=pdksh
 TOOLS_PATH.sh=			${TOOLS_PREFIX.sh}/bin/pdksh
 .  endif
-TOOLS_CMD.sh=			${TOOLS_DIR}/bin/sh
+TOOLS_CMD.sh=			${TOOLS_DIR}/bin${BINARCHSUFFIX}/sh
 .endif
 
 .if !defined(TOOLS_IGNORE.shlock) && !empty(_USE_TOOLS:Mshlock)
