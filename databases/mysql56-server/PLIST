@@ -22,7 +22,9 @@ ${PLIST.auth_socket}lib/mysql/plugin/auth_socket.so
 lib/mysql/plugin/auth_test_plugin.so
 lib/mysql/plugin/daemon_example.ini
 ${PLIST.sphinx}lib/mysql/plugin/ha_sphinx.so
+${PLIST.memcached}lib/mysql/plugin/innodb_engine.so
 lib/mysql/plugin/libdaemon_example.so
+${PLIST.memcached}lib/mysql/plugin/libmemcached.so
 lib/mysql/plugin/mypluglib.so
 lib/mysql/plugin/qa_auth_client.so
 lib/mysql/plugin/qa_auth_interface.so

@@ -3,7 +3,8 @@
 PKG_OPTIONS_VAR=	PKG_OPTIONS.mysql5
 
 # ndb-cluster does not configure with cmake
-PKG_SUPPORTED_OPTIONS+=	dtrace embedded-server ndb-cluster sphinx ssl
+PKG_SUPPORTED_OPTIONS+=	dtrace embedded-server ndb-cluster memcached ssl
+PKG_SUPPORTED_OPTIONS+=	sphinx
 PKG_SUGGESTED_OPTIONS+=	embedded-server ssl
 
 .include "../../mk/bsd.options.mk"
@@ -19,6 +20,17 @@ CMAKE_ARGS+=		-DWITH_SSL=no
 # Enable DTrace support
 .if !empty(PKG_OPTIONS:Mdtrace)
 CMAKE_ARGS+=		-DENABLE_DTRACE=ON
+.endif
+
+# Enable InnoDB Memcached support
+PLIST_VARS+=		memcached
+.if !empty(PKG_OPTIONS:Mmemcached)
+PLIST.memcached=	yes
+CMAKE_ARGS+=		-DWITH_INNODB_MEMCACHED=ON
+CMAKE_ARGS+=		-DWITH_BUNDLED_MEMCACHED=ON
+.include "../../devel/libevent/buildlink3.mk"
+.else
+CMAKE_ARGS+=		-DWITH_INNODB_MEMCACHED=OFF
 .endif
 
 # Enable Sphinx SE support
