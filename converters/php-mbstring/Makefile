@@ -7,8 +7,6 @@ LICENSE=		php
 
 CONFLICTS=		php-mbstring-[0-9]*
 
-INSTALLATION_DIRS+=	${PREFIX}/include/php/ext/mbstring
-INSTALLATION_DIRS+=	${PREFIX}/include/php/ext/mbstring/libmbfl
 INSTALLATION_DIRS+=	${PREFIX}/include/php/ext/mbstring/libmbfl/filters
 INSTALLATION_DIRS+=	${PREFIX}/include/php/ext/mbstring/libmbfl/mbfl
 INSTALLATION_DIRS+=	${PREFIX}/include/php/ext/mbstring/libmbfl/nls
