@@ -672,7 +672,7 @@ _GCC_PREFIX:=		${_GCC_ARCHDIR:H:H:H:H}/
 _GCC_SUBPREFIX:=	${_GCC_ARCHDIR:H:H:H:H:T}/
 .    endif
 .  endif
-_GCC_LIBDIRS=	${_GCC_ARCHDIR} ${_GCC_PREFIX}lib
+_GCC_LIBDIRS=	${_GCC_ARCHDIR} ${_GCC_PREFIX}lib${LIBABISUFFIX}
 _GCC_LDFLAGS=	# empty
 .  for _dir_ in ${_GCC_LIBDIRS:N*not_found*}
 _GCC_LDFLAGS+=	-L${_dir_} ${COMPILER_RPATH_FLAG}${_dir_}
