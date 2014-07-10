@@ -68,8 +68,6 @@ CONFIGURE_ENV+=		DSOFLAGS=${LDFLAGS:M*:Q}
 .include "options.mk"
 
 .if ${OPSYS} == "SunOS"
-LIBS_SSP =		-lssp_nonshared -lssp
-CONFIGURE_ENV+=	LIBS_SSP=${LIBS_SSP:M*:Q}
 LIBS.SunOS+=		-liconv
 .endif
 
