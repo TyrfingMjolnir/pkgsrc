@@ -133,9 +133,7 @@ while ! queue_is_empty argbuf; do
 			case $updatecache,$addtocache in
 			yes,yes)
 				shquote "$arg"; cachedarg="$shquoted"
-				$cat >> $cache_body << EOF
-$cachearg) arg=$cachedarg; split_arg=$split_arg; cachehit=yes ;;
-EOF
+				echo "$cachearg) arg=$cachedarg; split_arg=$split_arg; cachehit=yes ;;" >> $cache_body
 				{ echo "cache_lookup() {"
 				  echo "case \$arg in"
 				  $cat $cache_body
