@@ -57,7 +57,7 @@ while ! queue_is_empty argbuf; do
 		if $test $skipargs -eq 0; then
 			do_transform=yes
 		else
-			skipargs=`$expr $skipargs - 1 || true`
+			skipargs=$((skipargs - 1))
 			do_transform=no
 			argok=yes
 			continue
