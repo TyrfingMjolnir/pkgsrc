@@ -25,6 +25,9 @@ NO_BUILD=		yes
 ## Depend on exactly ${GCC47_DIST_VERSION}.
 BUILD_DEPENDS+=		${GCC_PKGNAME}-${GCC47_DIST_VERSION}{,nb[0-9]*}:../../lang/gcc47
 
+# Finds libs from gcc47 due to rpath
+CHECK_SHLIBS=	no
+
 .include "../../mk/bsd.prefs.mk"
 
 FIND_PREFIX:=		GCC_PKG_PREFIX=${GCC_PKGNAME}-${GCC47_DIST_VERSION}*
