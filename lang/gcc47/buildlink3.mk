@@ -17,14 +17,11 @@ BUILDLINK_PASSTHRU_DIRS+=	${BUILDLINK_PREFIX.gcc47}/gcc47
 BUILDLINK_FILES.gcc47=		#empty
 BUILDLINK_AUTO_VARS.gcc47=	no
 
-# XXX: upstream, should be handled by gcc47-libs buildlink, but what about
-# if not using USE_PKGSRC_GCC_RUNTIME?  DATASET-953
-#
 # Packages that link against shared libraries need a full dependency.
-#.if defined(_USE_GCC_SHLIB)
-#DEPENDS+=	{gcc47,gcc47-libs}>=4.7:../../lang/gcc47-libs
-#ABI_DEPENDS+=	{gcc47,gcc47-libs}>=4.7.0:../../lang/gcc47-libs
-#.endif
+.if defined(_USE_GCC_SHLIB) && empty(USE_PKGSRC_GCC_RUNTIME:M[Yy][Ee][Ss])
+DEPENDS+=	{gcc47,gcc47-libs}>=4.7:../../lang/gcc47-libs
+ABI_DEPENDS+=	{gcc47,gcc47-libs}>=4.7.0:../../lang/gcc47-libs
+.endif
 
 pkgbase := gcc47
 .include "../../mk/pkg-build-options.mk"
