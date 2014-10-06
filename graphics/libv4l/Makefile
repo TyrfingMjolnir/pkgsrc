@@ -9,6 +9,7 @@ MAINTAINER=	tech-multimedia@NetBSD.org
 HOMEPAGE=	http://people.atrpms.net/~hdegoede/
 COMMENT=	Video4Linux userspace library
 
+USE_GCC_RUNTIME=yes
 USE_TOOLS+=	gmake
 
 .include "../../mk/bsd.prefs.mk"

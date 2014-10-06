@@ -10,6 +10,8 @@ HOMEPAGE=	http://tap-plugins.sourceforge.net/ladspa.html
 COMMENT=	Tom's Audio Processing plugins
 LICENSE=	gnu-gpl-v2
 
+USE_GCC_RUNTIME=yes
+
 SUBST_CLASSES+=		prefix
 SUBST_STAGE.prefix=	post-patch
 SUBST_MESSAGE.prefix=	Fixing PREFIX.

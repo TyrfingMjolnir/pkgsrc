@@ -11,6 +11,8 @@ HOMEPAGE=	http://lpsolve.sourceforge.net/
 COMMENT=	Mixed Integer Linear Programming (MILP) solver
 #LICENSE=	LGPL, unclear which version (see lp_lib.h)
 
+USE_GCC_RUNTIME=	yes
+
 WRKSRC=		${WRKDIR}/lp_solve_5.5
 
 SUBST_CLASSES+=		dl
