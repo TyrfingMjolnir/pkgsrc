@@ -54,8 +54,8 @@ lib${LIBARCHSUFFIX}/itcl4.0.2/itcl.tcl
 lib${LIBARCHSUFFIX}/itcl4.0.2/itclConfig.sh
 lib${LIBARCHSUFFIX}/itcl4.0.2/itclHullCmds.tcl
 lib${LIBARCHSUFFIX}/itcl4.0.2/itclWidget.tcl
-lib${LIBARCHSUFFIX}/itcl4.0.2/libitcl4.0.0.so
-lib${LIBARCHSUFFIX}/itcl4.0.2/libitclstub4.0.0.a
+lib${LIBARCHSUFFIX}/itcl4.0.2/libitcl4.0.2.so
+lib${LIBARCHSUFFIX}/itcl4.0.2/libitclstub4.0.2.a
 lib${LIBARCHSUFFIX}/itcl4.0.2/pkgIndex.tcl
 lib${LIBARCHSUFFIX}/libtcl${SONUM}.a
 lib${LIBARCHSUFFIX}/libtcl${SONUM}.so
