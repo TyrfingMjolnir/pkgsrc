@@ -411,3 +411,4 @@ share/doc/bind9/arm/man.nsupdate.html
 share/doc/bind9/arm/man.rndc-confgen.html
 share/doc/bind9/arm/man.rndc.conf.html
 share/doc/bind9/arm/man.rndc.html
+share/examples/bind9/named.conf

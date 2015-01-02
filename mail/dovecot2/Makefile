@@ -16,6 +16,7 @@ GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--localstatedir=${VARBASE}
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 CONFIGURE_ARGS+=	--with-ssldir=${SSLDIR}
+CONFIGURE_ENV+=		am_cv_func_iconv_works=no
 
 .include "../../mk/bsd.prefs.mk"
 

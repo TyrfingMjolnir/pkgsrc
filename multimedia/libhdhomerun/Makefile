@@ -11,6 +11,7 @@ HOMEPAGE=	http://www.silicondust.com/
 COMMENT=	Client and library for Silicon Dust HD Homerun
 LICENSE=	gnu-lgpl-v2.1
 
+USE_GCC_RUNTIME=yes
 USE_TOOLS+=	gmake
 
 WRKSRC=	${WRKDIR}/libhdhomerun

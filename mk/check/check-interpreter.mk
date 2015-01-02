@@ -53,7 +53,7 @@ _check-interpreter: error-check .PHONY
 		${_CHECK_INTERP_SKIP:@p@${p}) continue ;;@}		\
 		*) ;;							\
 		esac;							\
-		if [ ! -f "$$file" ]; then				\
+		if [ ! -x "$$file" ]; then				\
 			continue;					\
 		fi;							\
 		if [ ! -r "$$file" ]; then				\
@@ -83,12 +83,6 @@ _check-interpreter: error-check .PHONY
 		if { [ ! -f ${DESTDIR:Q}"$$interp" ] &&			\
 		     [ ! -f ${DESTDIR:Q}"$$isainterp" ]	&&		\
 		     [ ! -f "$$interp" ]; }; then			\
-									\
-			if [ -x "$$file" ]; then			\
-				${DELAYED_ERROR_MSG} "[check-interpreter.mk] The interpreter \"$$interp\" of \"${DESTDIR}${PREFIX}/$$file\" does not exist."; \
-			else						\
-									\
-				${DELAYED_WARNING_MSG} "[check-interpreter.mk] The interpreter \"$$interp\" of \"${DESTDIR}${PREFIX}/$$file\" does not exist."; \
-			fi;						\
+			${DELAYED_ERROR_MSG} "[check-interpreter.mk] The interpreter \"$$interp\" of \"${DESTDIR}${PREFIX}/$$file\" does not exist."; \
 		fi;							\
 	done

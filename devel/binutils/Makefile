@@ -32,6 +32,7 @@ CONFIG_SHELL=		ksh
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-lib-path='/lib:/usr/lib'
 CONFIGURE_ARGS+=	--program-prefix=g
+CONFIGURE_ARGS+=	--without-zlib
 BINUTILS_PREFIX=	${PREFIX}/${MACHINE_GNU_PLATFORM}
 
 PLIST_SRC=	${PKGDIR}/PLIST.common

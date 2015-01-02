@@ -57,7 +57,7 @@ while ! queue_is_empty argbuf; do
 		if $test $skipargs -eq 0; then
 			do_transform=yes
 		else
-			skipargs=`$expr $skipargs - 1 || true`
+			skipargs=$((skipargs - 1))
 			do_transform=no
 			argok=yes
 			continue
@@ -133,9 +133,7 @@ while ! queue_is_empty argbuf; do
 			case $updatecache,$addtocache in
 			yes,yes)
 				shquote "$arg"; cachedarg="$shquoted"
-				$cat >> $cache_body << EOF
-$cachearg) arg=$cachedarg; split_arg=$split_arg; cachehit=yes ;;
-EOF
+				echo "$cachearg) arg=$cachedarg; split_arg=$split_arg; cachehit=yes ;;" >> $cache_body
 				{ echo "cache_lookup() {"
 				  echo "case \$arg in"
 				  $cat $cache_body

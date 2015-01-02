@@ -8,6 +8,8 @@ MAINTAINER=	asau@inbox.ru
 HOMEPAGE=	http://ficl.sourceforge.net/
 COMMENT=	Forth Inspired Command Language
 
+USE_GCC_RUNTIME=yes
+
 BUILD_TARGET=	ficl
 
 MAJOR=		4

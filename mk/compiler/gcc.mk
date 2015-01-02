@@ -669,7 +669,10 @@ _GCC_ARCHDIR!=		\
 	else								\
 		${ECHO} "_GCC_ARCHDIR_not_found";			\
 	fi
-_GCC_LIBDIRS=	${_GCC_ARCHDIR} ${_GCC_PREFIX}lib
+_GCC_LIBDIRS=	${_GCC_ARCHDIR}
+.  if empty(USE_PKGSRC_GCC_RUNTIME:M[Yy][Ee][Ss])
+_GCC_LIBDIRS+=	${_GCC_PREFIX}lib${LIBABISUFFIX}
+.  endif
 _GCC_LDFLAGS=	# empty
 .  for _dir_ in ${_GCC_LIBDIRS:N*not_found*}
 _GCC_LDFLAGS+=	-L${_dir_} ${COMPILER_RPATH_FLAG}${_dir_}

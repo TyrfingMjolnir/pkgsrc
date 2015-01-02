@@ -6,3 +6,5 @@ Size (3859170568fbe4fe21b5660dbaeca8d65ac10f1b.tar.gz) = 187873 bytes
 SHA1 (patch-Makefile.in) = 46f676a8e2bdb89f1d0f6f4e6c9cce55c56bb4bd
 SHA1 (patch-actions.c) = c7a630a2509ade9d913abb771a7bde4653a44e78
 SHA1 (patch-main.c) = 2faf9b225fdf30a997c5c0249cd40486d5d8d55c
+SHA1 (patch-pkgindb.c) = 7899085dade79b6c9656838eeccd8f191470995d
+SHA1 (patch-summary.c) = c3416bde25aca4a3b955a88d928cf1ebc7002455

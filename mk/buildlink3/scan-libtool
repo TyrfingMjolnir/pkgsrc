@@ -40,10 +40,6 @@ prevopt=
 nonopt=
 lafile=
 for arg do
-	case $arg in
-	-*=*)	optarg=`$echo "X$arg" | $Xsed -e 's/[-_a-zA-Z0-9]*=//'` ;;
-	*)	optarg= ;;
-	esac
 	if $test -n "$prevopt"; then
 		case $prevopt in
 		--mode)
@@ -66,7 +62,7 @@ for arg do
 		prevopt="$arg"
 		;;
 	--mode=*)
-		lt_mode="$optarg"
+		lt_mode="${arg#--mode=}"
 		;;
 	-*)
 		if $test -n "$nonopt" -a -z "$lt_mode"; then
