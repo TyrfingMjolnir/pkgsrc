@@ -20,6 +20,6 @@ PYTHON_VERSIONS_INCOMPATIBLE=	33 34 34 # py-sqlite2
 DEPENDS+=	${PYPKGPREFIX}-psycopg2>=2:../../databases/py-psycopg2
 .endif
 .if !empty(PKG_OPTIONS:Mmysql)
-DEPENDS+=	${PYPKGPREFIX}-mysqldb>=1.2.2:../../databases/py-mysqldb
+DEPENDS+=	${PYPKGPREFIX}-${MYSQL_PKG_PREFIX}db>=1.2.2:../../databases/py-mysqldb
 PYTHON_VERSIONS_INCOMPATIBLE=	33 34 34 # py-mysqldb
 .endif
