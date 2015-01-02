@@ -19,7 +19,6 @@ PKGCONFIG_OVERRIDE=	misc/dvdnav.pc.in
 
 pre-configure:
 	cd ${WRKSRC} && autoreconf -vi
->>>>>>> Convert "multimedia" category to multiarch.
 
 .include "../../multimedia/libdvdread/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
