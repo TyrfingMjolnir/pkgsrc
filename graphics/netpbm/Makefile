@@ -83,8 +83,6 @@ pre-install:
 
 post-install:
 	cd ${STAGEDIR} && 					\
-	${MKDIR} -p lib${LIBARCHSUFFIX} &&			\
-	${MV} link/* lib${LIBARCHSUFFIX} && 			\
 	${RM} -rf man/web && 					\
 	${MKDIR} share &&					\
 	${MV} misc share/netpbm && 				\
