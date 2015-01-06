@@ -17,9 +17,6 @@ USE_MULTIARCH=		bin lib
 USE_TOOLS+=		pkg-config
 PKGCONFIG_OVERRIDE=	misc/dvdnav.pc.in
 
-pre-configure:
-	cd ${WRKSRC} && autoreconf -vi
-
 .include "../../multimedia/libdvdread/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

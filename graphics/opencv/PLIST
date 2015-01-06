@@ -166,6 +166,8 @@ include/opencv2/videostab/stabilizer.hpp
 include/opencv2/videostab/videostab.hpp
 lib/cmake/opencv/OpenCVConfig-version.cmake
 lib/cmake/opencv/OpenCVConfig.cmake
+lib/cmake/opencv/OpenCVModules-release.cmake
+lib/cmake/opencv/OpenCVModules.cmake
 lib/libopencv_calib3d.so
 lib/libopencv_calib3d.so.2.4
 lib/libopencv_calib3d.so.${PKGVERSION}
@@ -224,10 +226,6 @@ lib/libopencv_videostab.so.${PKGVERSION}
 lib/pkgconfig/opencv.pc
 ${PLIST.python}${PYSITELIB}/cv.py
 ${PLIST.python}${PYSITELIB}/cv2.so
-share/OpenCV/OpenCVConfig-version.cmake
-share/OpenCV/OpenCVConfig.cmake
-share/OpenCV/OpenCVModules-release.cmake
-share/OpenCV/OpenCVModules.cmake
 share/OpenCV/haarcascades/haarcascade_eye.xml
 share/OpenCV/haarcascades/haarcascade_eye_tree_eyeglasses.xml
 share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml
