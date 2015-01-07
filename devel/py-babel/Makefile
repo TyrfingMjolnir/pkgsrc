@@ -19,7 +19,7 @@ PLIST_SUBST+=	PYVERSSUFFIX=${PYVERSSUFFIX}
 FILES_SUBST+=	PYVERSSUFFIX=${PYVERSSUFFIX}
 
 post-install:
-	${MV} ${DESTDIR}${PREFIX}/bin/pybabel \
+	[ -f ${DESTDIR}${PREFIX}/bin/pybabel ] && ${MV} ${DESTDIR}${PREFIX}/bin/pybabel \
 		${DESTDIR}${PREFIX}/bin/pybabel-${PYVERSSUFFIX}
 
 .include "../../lang/python/egg.mk"
