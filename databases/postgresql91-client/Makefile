@@ -75,13 +75,13 @@ post-wrapper:
 
 do-install-multiarch-hook:
 	${MKDIR} ${DESTDIR}/${PREFIX}/include/${INCARCHSUFFIX} \
-		{DESTDIR}/${PREFIX}/include/postgresql/server${INCARCHSUFFIX}
-	{MV} ${DESTDIR}/${PREFIX}/include/ecpg_config.h \
-		{DESTDIR}/${PREFIX}/include/${INCARCHSUFFIX}
-	{MV} ${DESTDIR}/${PREFIX}/include/pg_config.h \
-		{DESTDIR}/${PREFIX}/include/${INCARCHSUFFIX}
-	{MV} ${DESTDIR}/${PREFIX}/include/postgresql/server/pg_config.h \
-		{DESTDIR}/${PREFIX}/include/postgresql/server${INCARCHSUFFIX}
+		${DESTDIR}/${PREFIX}/include/postgresql/server${INCARCHSUFFIX}
+	${MV} ${DESTDIR}/${PREFIX}/include/ecpg_config.h \
+		${DESTDIR}/${PREFIX}/include/${INCARCHSUFFIX}
+	${MV} ${DESTDIR}/${PREFIX}/include/pg_config.h \
+		${DESTDIR}/${PREFIX}/include/${INCARCHSUFFIX}
+	${MV} ${DESTDIR}/${PREFIX}/include/postgresql/server/pg_config.h \
+		${DESTDIR}/${PREFIX}/include/postgresql/server${INCARCHSUFFIX}
 
 post-install:
 .for file in ${PGXS_FILES}
